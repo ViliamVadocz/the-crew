@@ -12,6 +12,7 @@ pub struct Player {
 }
 
 impl Player {
+    #[must_use]
     pub fn new(hand: ArrayVec<Card, HAND_SIZE>) -> Self {
         Self {
             hand,
@@ -19,6 +20,8 @@ impl Player {
         }
     }
 
+    /// Check whether a player has a card.
+    #[must_use]
     pub fn has(&self, card: &Card) -> bool {
         self.hand.contains(card)
     }

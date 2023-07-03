@@ -8,10 +8,11 @@ const_assert!(MAX_TASKS <= DECK_SIZE - 4);
 #[derive(Clone, Debug)]
 pub struct Task {
     card: ColorCard,
-    // TODO modifiers
+    // TODO: modifiers
 }
 
 impl Task {
+    #[must_use]
     pub fn new(card: ColorCard) -> Self {
         Self { card }
     }

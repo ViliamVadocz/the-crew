@@ -44,6 +44,7 @@ pub enum Card {
 }
 
 impl Card {
+    /// Get the color of a card. None if the card is a rocket.
     pub fn color(self) -> Option<Color> {
         match self {
             Card::Color(ColorCard { color, .. }) => Some(color),
@@ -51,6 +52,7 @@ impl Card {
         }
     }
 
+    /// Get the value of a card. Rockets have higher value than color cards.
     pub fn value(self) -> u8 {
         match self {
             Card::Color(ColorCard {
@@ -60,6 +62,15 @@ impl Card {
             Card::Rocket(RocketCard {
                 value: RocketValue(value),
             }) => value + 10,
+        }
+    }
+
+    /// Get the value of a card in the context of a trick.
+    pub fn value_in_trick(self, first_card: Self) -> u8 {
+        match self.color() {
+            None => self.value(),
+            c if c == first_card.color() => self.value(),
+            _ => 0,
         }
     }
 }

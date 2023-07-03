@@ -59,7 +59,7 @@ impl Game {
         let leader = players
             .iter()
             .position(|player| player.has(&ROCKET_4))
-            .expect("one of the players must have a Rocket-4");
+            .expect("One of the players should have a Rocket-4. ");
 
         Self {
             players,

@@ -2,22 +2,20 @@ use crate::{card::Card, game::PLAYERS};
 
 /// Get the index of the winner of the trick.
 /// The first card in the trick was played by the leader for that round.
+#[must_use]
 pub fn winner(trick: [Card; PLAYERS]) -> usize {
-    let color = trick[0].color();
+    let first_card = trick[0];
     trick
         .iter()
         .enumerate()
-        .max_by_key(|(_, card)| match card.color() {
-            None => card.value(),
-            c if c == color => card.value(),
-            _ => 0,
-        })
-        .unwrap()
+        .max_by_key(|(_, card)| card.value_in_trick(first_card))
+        .expect("The trick has four cards, so there must always be a winner.")
         .0
 }
 
 #[cfg(test)]
 mod tests {
+    #[allow(clippy::wildcard_imports)]
     use crate::{card::consts::*, trick::winner};
 
     #[test]
